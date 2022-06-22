@@ -1,0 +1,57 @@
+version: "3.5"
+services:
+
+    node_1:
+        image: nethermind
+        command: --config Condrieu --Metrics.Enabled true --EthStats.Enabled true --EthStats.Secret condrieu
+        volumes:
+            - ./config/condrieu.json:/config/genesis/condrieu.json
+            - ./node_1/configs/Condrieu.cfg:/nethermind/configs/Condrieu.cfg
+            - ./config/static-nodes.json:/nethermind/Data/static-nodes.json
+            - ./node_1/db/condrieu:/nethermind/nethermind_db/condrieu
+            - ./node_1/keystore:/nethermind/keystore
+        ports:
+            - 0.0.0.0:8547:8545
+            - 0.0.0.0:3001:3000
+        networks:
+            vpcbr:
+                ipv4_address: 10.5.0.2
+
+    node_2:
+        image: nethermind
+        command: --config Condrieu --Metrics.Enabled true --EthStats.Enabled true --EthStats.Secret condrieu
+        volumes:
+            - ./config/condrieu.json:/config/genesis/condrieu.json
+            - ./node_2/configs/Condrieu.cfg:/nethermind/configs/Condrieu.cfg
+            - ./config/static-nodes.json:/nethermind/Data/static-nodes.json
+            - ./node_2/db/condrieu:/nethermind/nethermind_db/condrieu
+            - ./node_2/keystore:/nethermind/keystore
+        ports:
+            - 0.0.0.0:8548:8545
+            - 0.0.0.0:3002:3000
+        networks:
+            vpcbr:
+                ipv4_address: 10.5.0.3
+
+    node_3:
+        image: nethermind
+        command: --config Condrieu --Metrics.Enabled true --EthStats.Enabled true --EthStats.Secret condrieu
+        volumes:
+            - ./config/condrieu.json:/config/genesis/condrieu.json
+            - ./node_3/configs/Condrieu.cfg:/nethermind/configs/Condrieu.cfg
+            - ./config/static-nodes.json:/nethermind/Data/static-nodes.json
+            - ./node_3/db/condrieu:/nethermind/nethermind_db/condrieu
+            - ./node_3/keystore:/nethermind/keystore
+        ports:
+            - 0.0.0.0:8549:8545
+            - 0.0.0.0:3003:3000
+        networks:
+            vpcbr:
+                ipv4_address: 10.5.0.4
+
+networks:
+    vpcbr:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.5.0.0/16
